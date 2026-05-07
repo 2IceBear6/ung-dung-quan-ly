@@ -1,77 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniClass Internal App</title>
+    <title>EduBox - Hệ Thống Quản Lý Trung Tâm Anh Ngữ</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Base CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <header class="glass-header">
-            <h1>UniClass Internal App</h1>
-            <p>Built with AI & Google Sheets cho UniClass</p>
-        </header>
-
-        <main class="container">
-            <!-- Khu vực Chào mừng (Dành cho người dùng mới deploy lần đầu) -->
-            <section class="card" id="welcomeSection" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1)); border-left: 5px solid var(--primary-color);">
-                <h2 style="border-bottom: none; color: var(--primary-color); font-size: 1.5rem;">🎉 Chúc mừng bạn đã Deploy thành công!</h2>
-                <p>Nếu bạn đang đọc được dòng chữ này trên Internet, có nghĩa là <strong>Bước 1</strong> đã hoàn tất rực rỡ. Website nội bộ của UniClass đã chính thức online!</p>
-                <div style="background: var(--card-bg); padding: 1.25rem; border-radius: 8px; margin-top: 1.25rem; box-shadow: var(--shadow-sm);">
-                    <p style="margin-bottom: 0.5rem;"><strong>👉 Bước tiếp theo:</strong> Bạn hãy quay lại phần mềm Antigravity, copy câu lệnh dưới đây và gửi cho AI để đi tiếp nhé:</p>
-                    <code style="display: block; background: #1e293b; color: #a7f3d0; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 1rem;">"Tôi đã thấy trang web chạy live thành công. Hãy bắt đầu Bước 2: Thu thập nghiệp vụ!"</code>
+    <!-- 1. MÀN HÌNH ĐĂNG NHẬP -->
+    <div id="loginScreen" class="screen-container">
+        <div class="login-wrapper">
+            <div class="login-left">
+                <div class="brand">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h2>EduBox</h2>
                 </div>
-                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">*Lưu ý: Các phần Form và Table bên dưới chỉ là giao diện mẫu (Boilerplate). Ở Bước 7, AI sẽ tự động xóa khung chào mừng này và code lại giao diện theo đúng nghiệp vụ của bạn.*</p>
-            </section>
-
-            <!-- Khu vực Form nhập liệu -->
-            <section class="card form-section">
-                <h2>Thêm dữ liệu mới</h2>
-                <form id="dataForm">
+                <h1 class="welcome-text">Chào mừng trở lại!</h1>
+                <p class="subtitle">Đăng nhập để quản lý hệ thống trung tâm Anh ngữ</p>
+                
+                <form id="loginForm">
                     <div class="form-group">
-                        <label for="exampleInput">Ví dụ trường dữ liệu</label>
-                        <input type="text" id="exampleInput" name="exampleInput" placeholder="Nhập gì đó..." required>
+                        <label>Email đăng nhập</label>
+                        <div class="input-icon">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="loginEmail" placeholder="admin@edubox.edu.vn" required>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">
-                        <span class="btn-text">Gửi dữ liệu</span>
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <div class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary btn-block" id="btnLogin">
+                        <span class="btn-text">Đăng nhập</span>
                         <span class="loader hidden"></span>
                     </button>
+                    <div id="loginError" class="error-msg hidden">Sai email hoặc mật khẩu!</div>
                 </form>
-                <div id="formMessage" class="message hidden"></div>
-            </section>
+            </div>
+            <div class="login-right">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students learning" class="login-image">
+            </div>
+        </div>
+    </div>
 
-            <!-- Khu vực Hiển thị dữ liệu -->
-            <section class="card data-section">
-                <div class="section-header">
-                    <h2>Danh sách Dữ liệu</h2>
-                    <button class="btn btn-secondary" id="refreshBtn">Làm mới</button>
+    <!-- 2. MÀN HÌNH DASHBOARD -->
+    <div id="dashboardScreen" class="screen-container hidden">
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h2>EduBox</h2>
+            </div>
+            <div class="user-profile">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="info">
+                    <div class="name" id="userNameDisplay">Admin</div>
+                    <div class="role" id="userRoleDisplay">Administrator</div>
                 </div>
-                <div class="table-container">
-                    <div id="tableLoader" class="loader center-loader"></div>
-                    <table id="dataTable" class="hidden">
-                        <thead>
-                            <tr>
-                                <!-- AI sẽ điền các cột header vào đây -->
-                                <th>Cột 1</th>
-                                <th>Cột 2</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <!-- AI sẽ render dữ liệu từ Google Sheet vào đây -->
-                        </tbody>
-                    </table>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Menu items will be injected here by JS based on Role -->
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" id="btnLogout" class="nav-item text-danger">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                </a>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="topbar">
+                <h2 id="pageTitle">Tổng quan</h2>
+                <div class="topbar-actions">
+                    <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
                 </div>
-            </section>
+            </header>
+            
+            <div class="content-area" id="contentArea">
+                <!-- Nội dung các trang sẽ được render vào đây -->
+            </div>
         </main>
     </div>
 
-    <!-- Base JS -->
+    <!-- GLOBAL LOADER -->
+    <div id="globalLoader" class="global-loader hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- MODAL CONTAINER -->
+    <div id="modalContainer" class="modal-overlay hidden">
+        <!-- Modal content will be injected by JS -->
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
