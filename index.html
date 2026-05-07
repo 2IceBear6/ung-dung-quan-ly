@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniClass Internal App</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header class="glass-header">
+            <h1>UniClass Internal App</h1>
+            <p>Built with AI & Google Sheets cho UniClass</p>
+        </header>
+
+        <main class="container">
+            <!-- Khu vực Chào mừng (Dành cho người dùng mới deploy lần đầu) -->
+            <section class="card" id="welcomeSection" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1)); border-left: 5px solid var(--primary-color);">
+                <h2 style="border-bottom: none; color: var(--primary-color); font-size: 1.5rem;">🎉 Chúc mừng bạn đã Deploy thành công!</h2>
+                <p>Nếu bạn đang đọc được dòng chữ này trên Internet, có nghĩa là <strong>Bước 1</strong> đã hoàn tất rực rỡ. Website nội bộ của UniClass đã chính thức online!</p>
+                <div style="background: var(--card-bg); padding: 1.25rem; border-radius: 8px; margin-top: 1.25rem; box-shadow: var(--shadow-sm);">
+                    <p style="margin-bottom: 0.5rem;"><strong>👉 Bước tiếp theo:</strong> Bạn hãy quay lại phần mềm Antigravity, copy câu lệnh dưới đây và gửi cho AI để đi tiếp nhé:</p>
+                    <code style="display: block; background: #1e293b; color: #a7f3d0; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 1rem;">"Tôi đã thấy trang web chạy live thành công. Hãy bắt đầu Bước 2: Thu thập nghiệp vụ!"</code>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">*Lưu ý: Các phần Form và Table bên dưới chỉ là giao diện mẫu (Boilerplate). Ở Bước 7, AI sẽ tự động xóa khung chào mừng này và code lại giao diện theo đúng nghiệp vụ của bạn.*</p>
+            </section>
+
+            <!-- Khu vực Form nhập liệu -->
+            <section class="card form-section">
+                <h2>Thêm dữ liệu mới</h2>
+                <form id="dataForm">
+                    <div class="form-group">
+                        <label for="exampleInput">Ví dụ trường dữ liệu</label>
+                        <input type="text" id="exampleInput" name="exampleInput" placeholder="Nhập gì đó..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <span class="btn-text">Gửi dữ liệu</span>
+                        <span class="loader hidden"></span>
+                    </button>
+                </form>
+                <div id="formMessage" class="message hidden"></div>
+            </section>
+
+            <!-- Khu vực Hiển thị dữ liệu -->
+            <section class="card data-section">
+                <div class="section-header">
+                    <h2>Danh sách Dữ liệu</h2>
+                    <button class="btn btn-secondary" id="refreshBtn">Làm mới</button>
+                </div>
+                <div class="table-container">
+                    <div id="tableLoader" class="loader center-loader"></div>
+                    <table id="dataTable" class="hidden">
+                        <thead>
+                            <tr>
+                                <!-- AI sẽ điền các cột header vào đây -->
+                                <th>Cột 1</th>
+                                <th>Cột 2</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- AI sẽ render dữ liệu từ Google Sheet vào đây -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Base JS -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn sử dụng - UniClass App Framework</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --bg-color: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Glassmorphism Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+
+        .card h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Step List */
+        .step-list {
+            list-style: none;
+            counter-reset: steps;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 3.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-list li::before {
+            counter-increment: steps;
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: -2px;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-list h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+        }
+
+        .step-list p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Prompt Box */
+        .prompt-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .prompt-text {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #a7f3d0;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: var(--accent);
+        }
+
+        /* Tech Stack */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>UniClass App Framework</h1>
+            <p>Giải pháp nội bộ của UniClass: Biến ý tưởng thành ứng dụng chỉ bằng cách trò chuyện với AI</p>
+        </header>
+
+        <section class="card">
+            <h2>✨ Chào mừng bạn đến với UniClass Framework!</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                Nếu bạn có ý tưởng tạo ra một công cụ để giải quyết công việc nội bộ (như quản lý yêu cầu, theo dõi tiến độ, lưu trữ data...) nhưng <strong>không biết lập trình</strong>, thì đây chính là "chiếc đũa thần" dành cho bạn.
+            </p>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                Thư mục mà bạn đang mở không phải là một ứng dụng có sẵn. Nó là một <strong>"Bộ khuôn mẫu"</strong> đã được chúng tôi dạy trước cho Trí tuệ Nhân tạo (AI). 
+            </p>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                Nhiệm vụ của bạn bây giờ rất đơn giản: <strong>Bạn đóng vai trò là "Người ra đề bài", còn AI sẽ là "Chuyên gia Lập trình"</strong>. AI sẽ dắt tay bạn đi từng bước cực kỳ nhỏ, bạn chỉ cần trả lời các câu hỏi và thao tác bấm/copy theo hướng dẫn.
+            </p>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Kết quả cuối cùng? Bạn sẽ tự tay tạo ra một ứng dụng thật sự chạy trên nền tảng web, với dữ liệu được lưu trực tiếp vào <strong>Google Sheets</strong> vô cùng quen thuộc!
+            </p>
+            <div class="tech-tags">
+                <span class="tag">🤖 Dành cho Non-tech</span>
+                <span class="tag">📄 Tự động viết code</span>
+                <span class="tag">📊 Google Sheets làm Data</span>
+                <span class="tag">🚀 Không tốn phí Server</span>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🚀 Hướng dẫn Bắt đầu (Bắt đầu từ con số 0)</h2>
+            <ul class="step-list">
+                <li>
+                    <h3>Cài đặt và Đăng nhập Antigravity</h3>
+                    <p>Antigravity là một phần mềm tích hợp AI sẽ giúp bạn viết code. Để bắt đầu:</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">1. Truy cập <a href="https://antigravity.google/download" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">https://antigravity.google/download</a> để tải phần mềm Antigravity về máy tính.</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">2. Cài đặt phần mềm (như cài các ứng dụng thông thường).</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">3. Mở phần mềm lên và tiến hành <strong>Đăng nhập</strong> bằng tài khoản bạn được cấp.</p>
+                </li>
+                <li>
+                    <h3>Mở thư mục dự án này trong Antigravity</h3>
+                    <p>Đưa tài liệu cho AI đọc bằng cách:</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">1. Mở phần mềm Antigravity.</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">2. Trên thanh menu trên cùng, chọn <strong>File</strong> > <strong>Open Folder</strong> (hoặc Mở thư mục).</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">3. Tìm đến đúng thư mục chứa các file dự án này và chọn <strong>Open</strong>. (Lúc này AI đã sẵn sàng đọc toàn bộ tài liệu).</p>
+                </li>
+                <li>
+                    <h3>Kích hoạt "Phép thuật"</h3>
+                    <p>Bắt đầu trò chuyện để AI làm việc thay bạn:</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">1. Tìm biểu tượng Chat của AI trong Antigravity (thường nằm ở cột bên trái hoặc phải màn hình).</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">2. Bấm vào nút <strong>Copy lệnh</strong> ở khung bên dưới.</p>
+                    <p style="margin-top: 5px; color: var(--text-muted);">3. Dán đoạn lệnh đó vào khung Chat của AI và nhấn Enter.</p>
+                    
+                    <div class="prompt-box">
+                        <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Copy lệnh
+                        </button>
+                        <div class="prompt-text" id="promptText">Chào AI, hãy đọc kỹ file AI_WORKFLOW_GUIDE.md, đóng vai trò là chuyên gia và bắt đầu dẫn dắt tôi chạy workflow tạo app.</div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>💡 Lưu ý quan trọng</h2>
+            <p style="color: var(--text-muted);">
+                - <strong>Đừng bắt AI làm tất cả:</strong> Workflow được thiết kế theo từng bước. Hãy làm xong một bước, xác nhận với AI rồi mới đi tiếp.<br><br>
+                - <strong>Dữ liệu là xương sống:</strong> Nếu có thay đổi tính năng sau này, hãy nhắc AI cập nhật vào file <code>app-functionality.md</code> để tránh AI bị "quên" logic.
+            </p>
+        </section>
+    </div>
+
+    <script>
+        function copyPrompt() {
+            const text = document.getElementById('promptText').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.innerHTML;
+                
+                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Đã copy!`;
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
